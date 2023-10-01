@@ -1,6 +1,6 @@
 #Importacion librerias
 library(dynlm)
-library(atsa)
+library(astsa)
 
 #Importacion de datasets de atsa
 data("soi")
@@ -16,10 +16,10 @@ tsplot(soi, col=4, ylab="", main="Indice de Oscilacion del Sur (SOI)",xlab="Tiem
 tsplot(rec, col=4, ylab="", main="Reclutamiento de nuevos peces",xlab="Tiempo", lwd=2) 
 #Descomposicion de las series temporales
 plot(decompose(soi))
-title(main = "Descomposici髇 Indice de Oscilacion del Sur (SOI)")
+title(main = "Descomposici贸n Indice de Oscilacion del Sur (SOI)")
 
 plot(decompose(rec))
-title(main = "Descomposici髇 del Reclutamiento")
+title(main = "Descomposici贸n del Reclutamiento")
 
 #Analisis de la funcion de autocorrelacion (ACF)
 #y analisis de la funcion de correlacion cruzada (CCF)
@@ -54,7 +54,7 @@ summary(fit2 <- dynlm(rec~ L(soi,6)))
 plot(lag_soi, fish$rec, main="Reclutamiento vs el Indice IOS (retardado en 6 meses)", xlab="SOI L6", ylab="Reclutamiento")
 
 abline(fit2, col="red")
-legend("bottomleft", legend=c("Datos", "Regresi髇"), col=c("black", "red"), lty=1, lwd=c(1, 2))
+legend("bottomleft", legend=c("Datos", "Regresi贸n"), col=c("black", "red"), lty=1, lwd=c(1, 2))
 
 
 #Suavizado por Kernel (promedio)
@@ -69,15 +69,15 @@ plot(x, gauss(x), type ="l", ylim=c(-.02,.45), xaxt='n', yaxt='n', ann=FALSE)
 #Suavizado por LOWESS (regresion local)
 #similar a regresion KNN
 plot(soi)
-lines(lowess(soi, f=.05), lwd=2, col=4) # ciclos de El Ni駉
+lines(lowess(soi, f=.05), lwd=2, col=4) # ciclos de El Ni帽o
 lines(lowess(soi), lty=2, lwd=2, col=2) # promedio de ciclos
 
 
 # Grafico de suavizado de datos por LOWESS
 plot(soi,ylab="SOI", xlab="Tiempo")
-lines(lowess(soi, f = 0.05), lwd = 2, col = "blue", legend.text = "Ciclos de El Ni駉")
+lines(lowess(soi, f = 0.05), lwd = 2, col = "blue", legend.text = "Ciclos de El Ni帽o")
 lines(lowess(soi), lty = 2, lwd = 2, col = "red", legend.text = "Suavizado de Datos (ciclos)")
-legend("bottomleft", legend = c("Datos del Indice de Oscilacion del Sur (SOI)", "Suavizado de Datos (ciclos de El Ni駉)", "Promedio del Suavizado (promedio ciclos)"), 
+legend("bottomleft", legend = c("Datos del Indice de Oscilacion del Sur (SOI)", "Suavizado de Datos (ciclos de El Ni帽o)", "Promedio del Suavizado (promedio ciclos)"), 
        col = c("black", "blue", "red"), lty = c(1, 1, 2), lwd = c(1, 2, 2))
 
 
@@ -97,18 +97,18 @@ for (p in 1:5) {
 }
 min_aic <- min(resultados_aic)
 fila_col_min_aic <- which(resultados_aic == min_aic, arr.ind = TRUE)
-cat("La combinaci髇 con el menor AIC es p =", fila_col_min_aic[1], "y q =", fila_col_min_aic[2], "\n")
-cat("El valor del AIC m韓imo es:", min_aic, "\n")
+cat("La combinaci贸n con el menor AIC es p =", fila_col_min_aic[1], "y q =", fila_col_min_aic[2], "\n")
+cat("El valor del AIC m铆nimo es:", min_aic, "\n")
 
 # Modelo ARIMA para serie de Reclutamiento
 modelo_arima <- arima(rec, order = c(1 ,0, 3))
 pronostico <- forecast(modelo_arima, h = 100)
 
-plot(rec, main = "Predicci髇 para serie de Reclutamiento", ylab = "Reclutamiento", xlab = "Tiempo", type = "l", col = "blue",lwd=1.7)
+plot(rec, main = "Predicci贸n para serie de Reclutamiento", ylab = "Reclutamiento", xlab = "Tiempo", type = "l", col = "blue",lwd=1.7)
 
 lines(pronostico$mean, col = "red",lwd=1.7) 
 
-legend("topleft", legend = c("Serie original", "Predicci髇"), col = c("blue", "red"), lty = 1,lwd=1.7)
+legend("topleft", legend = c("Serie original", "Predicci贸n"), col = c("blue", "red"), lty = 1,lwd=1.7)
 
 
 # Prueba de estacionariedad ACF para serie de Indice SOI
@@ -121,11 +121,11 @@ modelo_arima <- arima(soi, order = c(1, 0, 1), seasonal = list(order = c(1, 0, 1
 
 pronostico <- forecast(modelo_arima, h = 100)
 
-plot(soi, main = "Predicci髇 para serie del Indice de Oscilacion del Sur (SOI)", ylab = "SOI", xlab = "Tiempo", type = "l", col = "blue",lwd=1.7)
+plot(soi, main = "Predicci贸n para serie del Indice de Oscilacion del Sur (SOI)", ylab = "SOI", xlab = "Tiempo", type = "l", col = "blue",lwd=1.7)
 
 lines(pronostico$mean, col = "red",lwd=1.7) 
 
-legend("topleft", legend = c("Serie original", "Predicci髇"), col = c("blue", "red"), lty = 1,lwd=1.7)
+legend("topleft", legend = c("Serie original", "Predicci贸n"), col = c("blue", "red"), lty = 1,lwd=1.7)
 
 
 
