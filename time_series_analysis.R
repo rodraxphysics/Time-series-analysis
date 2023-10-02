@@ -2,7 +2,7 @@
 library(dynlm)
 library(astsa)
 
-#Importacion de datasets de atsa
+#Importacion de datasets de astsa
 data("soi")
 data("rec")
 
